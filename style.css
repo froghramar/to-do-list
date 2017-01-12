@@ -1,0 +1,8 @@
+.header{
+    text-align: center;
+}
+
+.center-layout{
+    padding-left: calc(10%);
+    padding-right: calc(10%);
+}
