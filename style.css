@@ -6,3 +6,7 @@
     padding-left: calc(10%);
     padding-right: calc(10%);
 }
+
+inputdiv{
+    border: 1px;
+}

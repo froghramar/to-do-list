@@ -3,19 +3,24 @@
     <head>
         <meta charset="utf-8">
         <title>My To Do List</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <link rel="stylesheet" href="style.css">
         <script src="listener.js"></script>
     </head>
     <body>
         <h1 class="header">My To Do List</h1>
-        <div class="center-layout">
-            <button>New</button>
-            <form>
-                Title : <input type="text" name="title"><br>
-                Description : <textarea type="text" name="description"></textarea><br>
-            </form>
-            <button onclick="addListener()">Add</button>
+        <div class="center-layout" id="main">
+            <div><button>Add New</button></div><br>
+            <inputdiv>
+                <form>
+                    Title :<br> <input type="text" name="title"><br>
+                    Description :<br><textarea type="text" name="description"></textarea><br><br>
+                </form>
+                <button onclick="addListener()">Add</button>
+                <button onclick="cancelListener()">Cancel</button>
+                <br><br><br>
+            </inputdiv>
+            <p>Hello</p>
         </div>
-        <div style="clear:both;"></div>
     </body>
 </html>
