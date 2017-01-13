@@ -10,17 +10,31 @@
     <body>
         <h1 class="header">My To Do List</h1>
         <div class="center-layout" id="main">
-            <div><button>Add New</button></div><br>
+            <div><button id="new" onclick="newListener()">Add New</button></div>
             <inputdiv>
                 <form>
-                    Title :<br> <input type="text" name="title"><br>
-                    Description :<br><textarea type="text" name="description"></textarea><br><br>
+                    <p>Title :</p>
+                    <input id='input-title' type="text">
+                    <p>Description :</p>
+                    <textarea id='input-description' type="text"></textarea>
                 </form>
                 <button onclick="addListener()">Add</button>
-                <button onclick="cancelListener()">Cancel</button>
-                <br><br><br>
+                <button onclick="canceListener()">Cancel</button>
             </inputdiv>
-            <p>Hello</p>
+            <h2>Task List</h2>
+            <p id="counter">[ No tasks in the list ]</p>
+            <div id="list" class="tasklist">
+                <div class="task">
+                    <task-title>title</task-title>
+                    <input type="checkbox"></input>
+                    <p>description</p>
+                </div>
+                <div class="task">
+                    <task-title>title</task-title>
+                    <input type="checkbox"></input>
+                    <p>description</p>
+                </div>
+            </div>
         </div>
     </body>
 </html>
