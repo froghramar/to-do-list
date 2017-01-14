@@ -3,8 +3,8 @@
 }
 
 .center-layout{
-    padding-left: calc(10%);
-    padding-right: calc(10%);
+    padding-left: 20%;
+    padding-right: 20%;
 }
 
 .task{
@@ -17,4 +17,14 @@
 
 task-title{
     font-weight: bold;
+}
+
+#input-title{
+    width: 100%;
+}
+
+#input-description{
+    width: 100%;
+    height: 100px;
+    margin-bottom: 20px;
 }
