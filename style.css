@@ -28,3 +28,7 @@ task-title{
     height: 100px;
     margin-bottom: 20px;
 }
+
+#inputdiv{
+    display: none;
+}
