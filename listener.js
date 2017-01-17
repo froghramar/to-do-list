@@ -1,29 +1,79 @@
 var totalTasks = 0;
 
+function found(text, pattern){
+    return text.includes(pattern);
+}
+
+function review(item, pattern) {
+    var childs = item.childNodes;
+    var selected = false;
+    for (var i = 0; i < childs.length; i++) {
+        if(childs[i].nodeType === 1){
+            var text = childs[i].innerHTML;
+            if(found(text, pattern)){
+                selected = true;
+                break;
+            }
+        }
+    }
+    if(selected){
+        item.classList.add("active");
+        totalTasks++;
+    }
+    else item.classList.remove("active");
+}
+
+function filter() {
+    var pattern = document.getElementById('searchbox').value;
+    var tasks = document.getElementById('list').childNodes;
+    totalTasks = 0;
+    for (var i = 0; i < tasks.length; i++) {
+        if(tasks[i].nodeType === 1){
+            review(tasks[i], pattern);
+        }
+    }
+    updateCounter();
+}
+
+function getAllSiblings(item) {
+    var result = [],
+    node = item.parentNode.firstChild;
+    while(node) {
+        if(node.nodeType === 1) result.push(node);
+        node = node.nextSibling;
+    }
+    return result;
+}
+
+function makeActiveAmongSiblings(item) {
+    var result = getAllSiblings(item);
+    for (var i = 0; i < result.length; i++) {
+        result[i].classList.remove("active");
+    }
+    item.classList.add("active");
+}
+
+function tabSelect(item) {
+    makeActiveAmongSiblings(item);
+    var tabview = document.getElementById(item.getAttribute('name'));
+    makeActiveAmongSiblings(tabview);
+}
+
 function checkboxClicked(box) {
+    var color, decoration;
     if(box.checked){
-        box.parentNode.style.backgroundColor = 'cyan';
-        box.nextSibling.style.textDecoration = "line-through";
+        color = 'cyan';
+        decoration = 'line-through';
     }
     else{
-        box.parentNode.style.backgroundColor = 'white';
-        box.nextSibling.style.textDecoration = "none";
+        color = 'white';
+        decoration = 'none';
     }
-}
-
-function enableNewButton(){
-    document.getElementById('new').disabled = false;
-    document.getElementById("new").style.cursor = "default";
-}
-
-function disableNewButton(){
-    document.getElementById('new').disabled = true;
-    document.getElementById("new").style.cursor = "not-allowed";
-}
-
-function newListener() {
-    disableNewButton();
-    document.getElementById('inputdiv').style.display = "block";
+    box.parentNode.style.backgroundColor = color;
+    var result = getAllSiblings(box);
+    for (var i = 0; i < result.length; i++) {
+        result[i].style.textDecoration = decoration;
+    }
 }
 
 function clearInput() {
@@ -31,20 +81,22 @@ function clearInput() {
     document.getElementById('input-description').value = "";
 }
 
+function updateCounter() {
+    document.getElementById('counter').innerHTML = "[ " + (totalTasks) + " tasks ]";
+}
+
+function moveToList() {
+    var tab = document.getElementsByName('tasklist');
+    tabSelect(tab[0]);
+}
+
 function addListener() {
-    enableNewButton();
-    document.getElementById('inputdiv').style.display = "none";
-    document.getElementById('counter').innerHTML = "[ " + (++totalTasks) + " tasks ]";
     var title = document.getElementById('input-title').value;
     var description = document.getElementById('input-description').value;
     addTask(title, description);
+    updateCounter();
     clearInput();
-}
-
-function canceListener() {
-    enableNewButton();
-    document.getElementById('inputdiv').style.display = "none";
-    clearInput();
+    moveToList();
 }
 
 function createTaskTitle(title) {
@@ -71,8 +123,10 @@ function createCheckbox() {
 function addTask(title, description) {
     var task = document.createElement("div");
     task.className = "task";
-    task.appendChild(createTaskTitle(title));
     task.appendChild(createCheckbox());
+    task.appendChild(createTaskTitle(title));
     task.appendChild(createTaskDescription(description));
+    var pattern = document.getElementById('searchbox').value;
+    review(task, pattern);
     document.getElementById('list').appendChild(task);
 }
