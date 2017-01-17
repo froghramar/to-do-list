@@ -3,9 +3,11 @@ var totalTasks = 0;
 function checkboxClicked(box) {
     if(box.checked){
         box.parentNode.style.backgroundColor = 'cyan';
+        box.nextSibling.style.textDecoration = "line-through";
     }
     else{
         box.parentNode.style.backgroundColor = 'white';
+        box.nextSibling.style.textDecoration = "none";
     }
 }
 
