@@ -2,6 +2,13 @@ var totalTasks = 0;
 
 window.onload = function() {
     updateCounter();
+    var rad = document.filterform.filter;
+    var prev = null;
+    for(var i = 0; i < rad.length; i++) {
+        rad[i].onclick = function() {
+            filter();
+        };
+    }
 }
 
 function found(text, pattern){
@@ -9,6 +16,12 @@ function found(text, pattern){
 }
 
 function review(item, pattern) {
+    var filterType = findSelection('filter');
+    var checked = item.getElementsByClassName('checkbox')[0].checked;
+    if((filterType == "checked" && checked == false) || (filterType == "unchecked" && checked == true)){
+        item.classList.remove("active");
+        return;
+    }
     var childs = item.childNodes;
     var selected = false;
     for (var i = 0; i < childs.length; i++) {
@@ -38,6 +51,16 @@ function filter() {
     }
     updateCounter();
 }
+
+function findSelection(field) {
+    var test = document.getElementsByName(field);
+    for(var i = 0; i < test.length; i++) {
+        if(test[i].checked==true) {
+            return test[i].value;
+        }
+    }
+}
+
 
 function getAllSiblings(item) {
     var result = [],
@@ -78,6 +101,7 @@ function checkboxClicked(box) {
     for (var i = 0; i < result.length; i++) {
         result[i].style.textDecoration = decoration;
     }
+    filter();
 }
 
 function clearInput() {
@@ -121,6 +145,7 @@ function createTaskDescription(description) {
 function createCheckbox() {
     var checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
+    checkbox.className = "checkbox";
     checkbox.onclick = function(){checkboxClicked(checkbox);};
     return checkbox;
 }

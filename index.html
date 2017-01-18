@@ -17,6 +17,11 @@
                 <div class="tabviewlist">
                     <tabview class="active" id="tasklist">
                         <input id='searchbox' oninput="filter()" type="text" placeholder="Search for tasks">
+                        <form name="filterform" id="radiofilter">
+                            <input type="radio" name="filter" value="all" checked> All
+                            <input type="radio" name="filter" value="checked"> Checked
+                            <input type="radio" name="filter" value="unchecked"> Unchecked
+                        </form>
                         <p id="counter"></p>
                         <div id="list" class="tasklist"></div>
                     </tabview>

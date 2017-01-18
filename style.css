@@ -48,6 +48,10 @@ task-title{
     font-weight: bold;
 }
 
+#radiofilter{
+    text-align: right;
+}
+
 #searchbox{
     padding-top: 10px;
     padding-bottom: 10px;
