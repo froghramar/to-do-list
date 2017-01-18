@@ -1,5 +1,9 @@
 var totalTasks = 0;
 
+window.onload = function() {
+    updateCounter();
+}
+
 function found(text, pattern){
     return text.includes(pattern);
 }
@@ -82,7 +86,8 @@ function clearInput() {
 }
 
 function updateCounter() {
-    document.getElementById('counter').innerHTML = "[ " + (totalTasks) + " tasks ]";
+    var message = totalTasks > 0 ? "[ " + totalTasks + " tasks ]" : "[ No task ]";
+    document.getElementById('counter').innerHTML = message;
 }
 
 function moveToList() {

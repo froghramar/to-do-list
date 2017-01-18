@@ -11,13 +11,13 @@
             <h1 class="header">My To Do List</h1>
             <div class="tabbed-pannel">
                 <div class="tablist">
-                    <tab class="active" name="tasklist" onclick="tabSelect(this)">Task List</tab>
-                    <tab name="newtask" onclick="tabSelect(this)">New Task</tab>
+                    <tab class="active" name="tasklist" title="List of All Tasks" onclick="tabSelect(this)">Task List</tab>
+                    <tab name="newtask" title="Add New Tasks" onclick="tabSelect(this)">New Task</tab>
                 </div>
                 <div class="tabviewlist">
                     <tabview class="active" id="tasklist">
                         <input id='searchbox' oninput="filter()" type="text" placeholder="Search for tasks">
-                        <p id="counter">[ 0 tasks ]</p>
+                        <p id="counter"></p>
                         <div id="list" class="tasklist"></div>
                     </tabview>
                     <tabview id="newtask">

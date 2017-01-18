@@ -8,7 +8,6 @@
 }
 
 .tablist{
-    font-size: 20px;
     padding-bottom: 20px;
 }
 
@@ -20,7 +19,6 @@
 }
 
 .tablist tab.active{
-    background: #e0e0eb;
     font-weight: bold;
     cursor: default;
 }
