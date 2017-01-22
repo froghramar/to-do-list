@@ -2,23 +2,20 @@
     text-align: center;
 }
 
-.center-layout{
-    padding-left: 20%;
-    padding-right: 20%;
+div.center-layout{
+    width: 95%;
+    max-width: 800px;
+    margin: auto;
 }
 
-.tablist{
-    padding-bottom: 20px;
-}
-
-.tablist tab {
+div.tablist tab {
     background: #f0f0f5;
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
 }
 
-.tablist tab.active{
+div.tablist tab.active{
     font-weight: bold;
     cursor: default;
 }
@@ -63,7 +60,7 @@ task-title{
     padding-top: 10px;
     padding-bottom: 10px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 15px;
     font-weight: bold;
     width: 100%;
