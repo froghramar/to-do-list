@@ -15,6 +15,7 @@
                 <div class="tablist">
                     <tab class="active" name="tasklist" title="List of All Tasks" onclick="listener.tabSelect(this)">Task List</tab>
                     <tab name="newtask" title="Add New Tasks" onclick="listener.tabSelect(this)">New Task</tab>
+                    <tab id='edittaskTab' name="edittask" title="Edit Task" onclick="listener.tabSelect(this)">Edit Task</tab>
                 </div>
                 <div class="tabviewlist">
                     <tabview class="active" id="tasklist">
@@ -35,6 +36,17 @@
                                 <p>Description :</p>
                                 <textarea id='input-description' type="text"></textarea>
                                 <button type="submit">Add</button>
+                            </form>
+                        </inputdiv>
+                    </tabview>
+                    <tabview id="edittask">
+                        <inputdiv id="editdiv">
+                            <form action="javascript:listener.updateButtonEvent()">
+                                <p>Title :</p>
+                                <input id='edit-title' type="text" required="true">
+                                <p>Description :</p>
+                                <textarea id='edit-description' type="text"></textarea>
+                                <button type="submit">Save</button>
                             </form>
                         </inputdiv>
                     </tabview>

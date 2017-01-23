@@ -1,11 +1,11 @@
 function FrontView() {
-    var totalTasks = 0;
+    this.totalTasks = 0;
     this.refresh = function() {
         this.updateListView();
         this.updateCounterMessage();
     }
     this.updateCounterMessage = function() {
-        var message = totalTasks > 0 ? "[ " + totalTasks + " tasks ]" : "[ No task ]";
+        var message = this.totalTasks > 0 ? "[ " + this.totalTasks + " tasks ]" : "[ No task ]";
         document.getElementById('counter').innerHTML = message;
     }
     this.createTaskTitle = function(title) {
@@ -28,11 +28,25 @@ function FrontView() {
         checkbox.onclick = function(){listener.checkboxClicked(checkbox);};
         return checkbox;
     }
+    this.createEditButton = function() {
+        var button = document.createElement("button");
+        button.innerHTML = 'edit';
+        button.onclick = function(){listener.editButtonClicked(button);};
+        return button;
+    }
+    this.createDeleteButton = function() {
+        var button = document.createElement("button");
+        button.innerHTML = 'delete';
+        button.onclick = function(){listener.deleteButtonClicked(button);};
+        return button;
+    }
     this.addTask = function(id, task) {
         var item = document.createElement("div");
         item.className = "task";
-        item.appendChild(this.createCheckbox(task.checked));
         item.appendChild(this.createTaskTitle(task.title));
+        item.appendChild(this.createCheckbox(task.checked));
+        item.appendChild(this.createEditButton());
+        item.appendChild(this.createDeleteButton());
         item.appendChild(this.createTaskDescription(task.description));
         if(task.checked){
             item.classList.add('task-checked');
@@ -41,13 +55,13 @@ function FrontView() {
         document.getElementById('list').appendChild(item);
     }
     this.updateListView = function() {
-        totalTasks = 0;
+        this.totalTasks = 0;
         this.removeAllChild(document.getElementById('list'));
         var searchModel = this.getSearchModel();
         var taskList = repo.getTaskList();
         for (var id in taskList) {
             if(searchModel.matches(taskList[id])){
-                totalTasks++;
+                this.totalTasks++;
                 this.addTask(id, taskList[id]);
             }
         }
@@ -87,6 +101,12 @@ function FrontView() {
     this.getInputDescription = function() {
         return document.getElementById('input-description').value;
     }
+    this.getEditedTitle = function() {
+        return document.getElementById('edit-title').value;
+    }
+    this.getEditedDescription = function() {
+        return document.getElementById('edit-description').value;
+    }
     this.addRadioButtonListener = function() {
         var rad = document.filterform.filter;
         var prev = null;
@@ -95,6 +115,13 @@ function FrontView() {
                 frontView.refresh();
             };
         }
+    }
+    this.getUpdatedTask = function(item) {
+        var title = item.getElementsByTagName('task-title')[0].innerHTML;
+        var description = item.getElementsByTagName('p')[0].innerHTML;
+        var checked = item.getElementsByTagName('input')[0].checked;
+        var task = new Task(title, description, checked);
+        return task;
     }
     this.getCorrespondingTabContent = function(item) {
         return document.getElementById(item.getAttribute('name'));
@@ -114,6 +141,13 @@ function FrontView() {
             node = node.nextSibling;
         }
         return result;
+    }
+    this.viewEditOptions = function(id){
+        var task = repo.getTask(id);
+        document.getElementById('edit-title').value = task.title;
+        document.getElementById('edit-description').value = task.description;
+        var tab = document.getElementsByName('edittask');
+        listener.tabSelect(tab[0]);
     }
     this.clearInput = function() {
         document.getElementById('input-title').value = "";

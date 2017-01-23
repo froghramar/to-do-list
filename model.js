@@ -38,6 +38,9 @@ function Repository() {
             if(key > this.maxId) this.maxId = key;
         }
     }
+    this.getTask = function(id) {
+        return this.taskList[id];
+    }
     this.getTaskList = function() {
         return this.taskList;
     }

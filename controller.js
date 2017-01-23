@@ -1,12 +1,23 @@
 function Controller() {
-    this.updateCheckedStatus = function(item){
+    this.editId = 0;
+    this.updateTask = function(item){
         var id = item.getAttribute("data-taskid");
-        var title = item.getElementsByTagName('task-title')[0].innerHTML;
-        var description = item.getElementsByTagName('p')[0].innerHTML;
-        var checked = item.getElementsByTagName('input')[0].checked;
-        var task = new Task(title, description, checked);
+        var task = frontView.getUpdatedTask(item);
         repo.updateTask(id, task);
         frontView.refresh();
+    }
+    this.removeTask = function(id) {
+        repo.removeTask(id);
+        frontView.refresh();
+    }
+    this.updateAfterEdit = function() {
+        var title = frontView.getEditedTitle();
+        var description = frontView.getEditedDescription();
+        var checked = repo.getTask(this.editId).checked;
+        var task = new Task(title, description, checked);
+        repo.updateTask(this.editId, task);
+        frontView.refresh();
+        frontView.moveToList();
     }
 }
 
@@ -26,8 +37,20 @@ function Listener() {
         frontView.moveToList();
         frontView.clearInput();
     }
+    this.updateButtonEvent = function() {
+        controller.updateAfterEdit();
+    }
     this.checkboxClicked = function(box) {
-        controller.updateCheckedStatus(box.parentNode);
+        controller.updateTask(box.parentNode);
+    }
+    this.deleteButtonClicked = function(button) {
+        var id = button.parentNode.getAttribute('data-taskid');
+        controller.removeTask(id);
+    }
+    this.editButtonClicked = function(button) {
+        var id = button.parentNode.getAttribute('data-taskid');
+        controller.editId = id;
+        frontView.viewEditOptions(id);
     }
 }
 
