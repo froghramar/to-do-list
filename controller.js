@@ -1,7 +1,11 @@
 function Controller() {
     this.updateCheckedStatus = function(item){
         var id = item.getAttribute("data-taskid");
-        repo.changeCheckedStatus(id);
+        var title = item.getElementsByTagName('task-title')[0].innerHTML;
+        var description = item.getElementsByTagName('p')[0].innerHTML;
+        var checked = item.getElementsByTagName('input')[0].checked;
+        var task = new Task(title, description, checked);
+        repo.updateTask(id, task);
         frontView.refresh();
     }
 }
@@ -31,6 +35,6 @@ var listener = new Listener();
 
 window.onload = function() {
     frontView.addRadioButtonListener();
-    repo.addTask('title', 'description', false);
+    repo.cloneLocalStorage();
     frontView.refresh();
 }
