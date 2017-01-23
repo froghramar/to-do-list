@@ -1,10 +1,7 @@
 function Controller() {
     this.updateCheckedStatus = function(item){
-        var text = frontView.getAllSiblings(item);
-        var title = text[1].innerHTML;
-        var description = text[2].innerHTML;
-        var checked = item.checked;
-        model.changeCheckedStatus(title, description, !checked);
+        var id = item.getAttribute("data-taskid");
+        repo.changeCheckedStatus(id);
         frontView.refresh();
     }
 }
@@ -20,13 +17,13 @@ function Listener() {
     this.addTaskEvent = function() {
         var title = frontView.getInputTitle();
         var description = frontView.getInputDescription();
-        model.addTask(title, description, false);
+        repo.addTask(title, description, false);
         frontView.refresh();
         frontView.moveToList();
         frontView.clearInput();
     }
     this.checkboxClicked = function(box) {
-        controller.updateCheckedStatus(box);
+        controller.updateCheckedStatus(box.parentNode);
     }
 }
 
@@ -34,5 +31,6 @@ var listener = new Listener();
 
 window.onload = function() {
     frontView.addRadioButtonListener();
+    repo.addTask('title', 'description', false);
     frontView.refresh();
 }

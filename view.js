@@ -28,7 +28,7 @@ function FrontView() {
         checkbox.onclick = function(){listener.checkboxClicked(checkbox);};
         return checkbox;
     }
-    this.addTask = function(task) {
+    this.addTask = function(id, task) {
         var item = document.createElement("div");
         item.className = "task";
         item.appendChild(this.createCheckbox(task.checked));
@@ -37,17 +37,18 @@ function FrontView() {
         if(task.checked){
             item.classList.add('task-checked');
         }
+        item.setAttribute("data-taskid", id);
         document.getElementById('list').appendChild(item);
     }
     this.updateListView = function() {
         totalTasks = 0;
         this.removeAllChild(document.getElementById('list'));
         var searchModel = this.getSearchModel();
-        var taskList = model.getTaskList();
-        for (var i = 0; i < taskList.length; i++) {
-            if(searchModel.matches(taskList[i])){
+        var taskList = repo.getTaskList();
+        for (var id in taskList) {
+            if(searchModel.matches(taskList[id])){
                 totalTasks++;
-                this.addTask(taskList[i]);
+                this.addTask(id, taskList[id]);
             }
         }
     }
