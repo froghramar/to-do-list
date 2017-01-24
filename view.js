@@ -30,13 +30,15 @@ function FrontView() {
     }
     this.createEditButton = function() {
         var button = document.createElement("button");
-        button.innerHTML = 'edit';
+        button.className = "editbutton";
+        button.innerHTML = 'Edit';
         button.onclick = function(){listener.editButtonClicked(button);};
         return button;
     }
     this.createDeleteButton = function() {
         var button = document.createElement("button");
-        button.innerHTML = 'delete';
+        button.className = "deletebutton";
+        button.innerHTML = 'Delete';
         button.onclick = function(){listener.deleteButtonClicked(button);};
         return button;
     }
@@ -44,9 +46,9 @@ function FrontView() {
         var item = document.createElement("div");
         item.className = "task";
         item.appendChild(this.createTaskTitle(task.title));
-        item.appendChild(this.createCheckbox(task.checked));
-        item.appendChild(this.createEditButton());
         item.appendChild(this.createDeleteButton());
+        item.appendChild(this.createEditButton());
+        item.appendChild(this.createCheckbox(task.checked));
         item.appendChild(this.createTaskDescription(task.description));
         if(task.checked){
             item.classList.add('task-checked');

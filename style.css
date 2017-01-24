@@ -36,6 +36,26 @@ div.tablist tab.active{
     border-width: 1px;
 }
 
+.checkbox, .editbutton, .deletebutton{
+    float: right;
+}
+
+button {
+    background-color: white;
+    color: black;
+    padding: 5px 20px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: 2px solid #4CAF50;
+}
+
+button:hover{
+    background-color: #4CAF50;
+    color: white;
+}
+
 .task-checked{
     background: cyan;
 }
