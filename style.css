@@ -9,9 +9,8 @@ div.center-layout{
 }
 
 div.tablist > tab {
-    background: #f0f0f5;
     padding: 10px;
-    border-radius: 10px;
+    border: 1px solid black;
     cursor: pointer;
 }
 
@@ -32,7 +31,6 @@ div.tablist > tab.active{
     margin-bottom: 10px;
     padding: 10px;
     border-style: solid;
-    border-radius: 10px;
     border-width: 1px;
 }
 
@@ -46,7 +44,6 @@ div.tablist > tab.active{
 }
 
 button {
-    background-color: white;
     color: black;
     padding: 5px;
     text-align: center;
@@ -59,11 +56,12 @@ button {
 }
 
 button:hover{
-    font-weight: bold;
+    color: white;
+    background-color: #333333;
 }
 
 .task-checked{
-    background: #f0f0f5;
+    background: #d9d9d9;
 }
 
 task-title{
