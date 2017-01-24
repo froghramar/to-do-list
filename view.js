@@ -152,8 +152,7 @@ function FrontView() {
         listener.tabSelect(tab[0]);
     }
     this.clearInput = function() {
-        document.getElementById('input-title').value = "";
-        document.getElementById('input-description').value = "";
+        document.getElementById('addtaskform').reset();
     }
     this.moveToList = function() {
         var tab = document.getElementsByName('tasklist');

@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="center-layout">
-            <h1 class="header">My To Do List</h1>
+            <h1>My To Do List</h1>
             <div class="tabbed-pannel">
                 <div class="tablist">
                     <tab class="active" name="tasklist" title="List of All Tasks" onclick="listener.tabSelect(this)">Task List</tab>
@@ -30,7 +30,7 @@
                     </tabview>
                     <tabview id="newtask">
                         <inputdiv id="inputdiv">
-                            <form action="javascript:listener.addTaskEvent()">
+                            <form id='addtaskform' action="javascript:listener.addTaskEvent()">
                                 <p>Title :</p>
                                 <input id='input-title' type="text" required="true">
                                 <p>Description :</p>
@@ -42,6 +42,7 @@
                     <tabview id="edittask">
                         <inputdiv id="editdiv">
                             <form action="javascript:listener.updateButtonEvent()">
+                                <h4>Edit This Task</h4>
                                 <p>Title :</p>
                                 <input id='edit-title' type="text" required="true">
                                 <p>Description :</p>

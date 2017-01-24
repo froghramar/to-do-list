@@ -1,4 +1,4 @@
-.header{
+h1, h4{
     text-align: center;
 }
 
@@ -8,16 +8,16 @@ div.center-layout{
     margin: auto;
 }
 
-div.tablist tab {
+div.tablist > tab {
     background: #f0f0f5;
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
 }
 
-div.tablist tab.active{
+div.tablist > tab.active{
     font-weight: bold;
-    cursor: default;
+    cursor: text;
 }
 
 .tabviewlist tabview {
@@ -32,7 +32,7 @@ div.tablist tab.active{
     margin-bottom: 10px;
     padding: 10px;
     border-style: solid;
-    border-radius: 30px;
+    border-radius: 10px;
     border-width: 1px;
 }
 
@@ -40,24 +40,30 @@ div.tablist tab.active{
     float: right;
 }
 
+.checkbox{
+    cursor: pointer;
+    margin-top: 10px;
+}
+
 button {
     background-color: white;
     color: black;
-    padding: 5px 20px;
+    padding: 5px;
     text-align: center;
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    border: 2px solid #4CAF50;
+    border: 1px solid black;
+    width: 100px;
+    text-transform: uppercase;
 }
 
 button:hover{
-    background-color: #4CAF50;
-    color: white;
+    font-weight: bold;
 }
 
 .task-checked{
-    background: cyan;
+    background: #f0f0f5;
 }
 
 task-title{
@@ -98,6 +104,10 @@ task-title{
     width: 100%;
     height: 100px;
     margin-bottom: 20px;
+}
+
+#radiofilter > input{
+    cursor: pointer;
 }
 
 #inputdiv{
