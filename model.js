@@ -3,21 +3,15 @@ function Task(title, description, checked) {
     this.description = description;
     this.checked = checked;
 }
-function SearchModel(searchkey, filter) {
-    this.searchkey = searchkey;
-    this.filter = filter;
-    this.matches = function(task) {
-        if(filter.indexOf(task.checked) == -1) return false;
-        if(task.title.includes(searchkey)) return true;
-        return task.description.includes(searchkey);
-    }
-}
 function Repository() {
     this.taskList = {};
-    this.maxId = 0;
     this.addTask = function(title, description, checked){
         var task = new Task(title, description, checked);
-        this.taskList[++this.maxId] = task;
+        var maxId = 0;
+        for (var key in this.taskList) {
+            if(key > maxId) maxId = key;
+        }
+        this.taskList[++maxId] = task;
         this.updateLocalStorage();
     }
     this.removeTask = function(id){
@@ -28,15 +22,16 @@ function Repository() {
         this.taskList[id] = task;
         this.updateLocalStorage();
     }
+    this.updateCheckedStatus = function(id) {
+        this.taskList[id].checked = !this.taskList[id].checked;
+        this.updateLocalStorage();
+    }
     this.updateLocalStorage = function() {
         localStorage.setItem('to-do-list', JSON.stringify(this.taskList));
     }
     this.cloneLocalStorage = function() {
         if(localStorage.getItem("to-do-list") == null) return;
         this.taskList = JSON.parse(localStorage.getItem("to-do-list"));
-        for (var key in this.taskList) {
-            if(key > this.maxId) this.maxId = key;
-        }
     }
     this.getTask = function(id) {
         return this.taskList[id];

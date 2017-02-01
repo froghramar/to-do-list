@@ -1,63 +1,36 @@
 function Controller() {
-    this.editId = 0;
-    this.updateTask = function(item){
-        var id = item.getAttribute("data-taskid");
-        var task = frontView.getUpdatedTask(item);
-        repo.updateTask(id, task);
-        frontView.refresh();
-    }
-    this.removeTask = function(id) {
-        repo.removeTask(id);
-        frontView.refresh();
-    }
-    this.updateAfterEdit = function() {
-        var title = frontView.getEditedTitle();
-        var description = frontView.getEditedDescription();
-        var checked = repo.getTask(this.editId).checked;
-        var task = new Task(title, description, checked);
-        repo.updateTask(this.editId, task);
-        frontView.refresh();
-        frontView.moveToList();
+    this.init = function() {
+        repo.cloneLocalStorage();
+        var app = angular.module("app-tasklist", []);
+        app.controller('app-tasklist-ctrl', function($scope) {
+            $scope.selectedTabName = "tasklist";
+            $scope.todoFilter = "all";
+            $scope.searchKey = "";
+            $scope.tasklist = repo.getTaskList();
+            $scope.addTask = function () {
+                repo.addTask(addtaskform.addtasktitle.value, addtaskform.addtasktitle.value, false);
+                $scope.selectedTabName='tasklist';
+            }
+            $scope.editTask = function(id) {
+                $scope.editid = id;
+                $scope.edittasktitle = $scope.tasklist[id].title;
+                $scope.edittaskdescription = $scope.tasklist[id].description;
+                $scope.selectedTabName='edittask';
+            }
+            $scope.updateTask = function() {
+                var task = new Task(edittaskform.edittasktitle.value, edittaskform.edittaskdescription.value, $scope.tasklist[$scope.editid].checked);
+                repo.updateTask($scope.editid, task);
+                $scope.selectedTabName='tasklist';
+            }
+            $scope.deleteTask = function(id) {
+                repo.removeTask(id);
+            }
+            $scope.updateCheckedStatus = function(id) {
+                repo.updateCheckedStatus(id);
+            }
+        });
     }
 }
 
 var controller = new Controller();
-
-function Listener() {
-    this.tabSelect = function(item) {
-        frontView.makeActiveAmongSiblings(item);
-        var tabview = frontView.getCorrespondingTabContent(item);
-        frontView.makeActiveAmongSiblings(tabview);
-    }
-    this.addTaskEvent = function() {
-        var title = frontView.getInputTitle();
-        var description = frontView.getInputDescription();
-        repo.addTask(title, description, false);
-        frontView.refresh();
-        frontView.moveToList();
-        frontView.clearInput();
-    }
-    this.updateButtonEvent = function() {
-        controller.updateAfterEdit();
-    }
-    this.checkboxClicked = function(box) {
-        controller.updateTask(box.parentNode);
-    }
-    this.deleteButtonClicked = function(button) {
-        var id = button.parentNode.getAttribute('data-taskid');
-        controller.removeTask(id);
-    }
-    this.editButtonClicked = function(button) {
-        var id = button.parentNode.getAttribute('data-taskid');
-        controller.editId = id;
-        frontView.viewEditOptions(id);
-    }
-}
-
-var listener = new Listener();
-
-window.onload = function() {
-    frontView.addRadioButtonListener();
-    repo.cloneLocalStorage();
-    frontView.refresh();
-}
+controller.init();
