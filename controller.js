@@ -1,14 +1,54 @@
 function Controller() {
     this.init = function() {
-        repo.cloneLocalStorage();
         var app = angular.module("app-tasklist", []);
-        app.controller('app-tasklist-ctrl', function($scope) {
+        app.service('repository', function () {
+            this.taskList = {};
+            this.addTask = function (title, description, checked) {
+                var task = new Task(title, description, checked);
+                var maxId = 0;
+                for (var key in this.taskList) {
+                    if (key > maxId) maxId = key;
+                }
+                this.taskList[++maxId] = task;
+                this.updateLocalStorage();
+            }
+            this.removeTask = function (id) {
+                delete this.taskList[id];
+                this.updateLocalStorage();
+            }
+            this.updateTask = function (id, task) {
+                this.taskList[id] = task;
+                this.updateLocalStorage();
+            }
+            this.updateCheckedStatus = function (id) {
+                this.taskList[id].checked = !this.taskList[id].checked;
+                this.updateLocalStorage();
+            }
+            this.updateLocalStorage = function () {
+                localStorage.setItem('to-do-list', JSON.stringify(this.taskList));
+            }
+            this.cloneLocalStorage = function () {
+                if (localStorage.getItem("to-do-list") == null) return;
+                this.taskList = JSON.parse(localStorage.getItem("to-do-list"));
+            }
+            this.getTask = function (id) {
+                return this.taskList[id];
+            }
+            this.getTaskList = function () {
+                return this.taskList;
+            }
+            this.getTaskCount = function () {
+                return this.taskList.length;
+            }
+        });
+        app.controller('app-tasklist-ctrl', function($scope, repository) {
             $scope.selectedTabName = "tasklist";
             $scope.todoFilter = "all";
             $scope.searchKey = "";
-            $scope.tasklist = repo.getTaskList();
+            repository.cloneLocalStorage();
+            $scope.tasklist = repository.getTaskList();
             $scope.addTask = function () {
-                repo.addTask(addtaskform.addtasktitle.value, addtaskform.addtasktitle.value, false);
+                repository.addTask(addtaskform.addtasktitle.value, addtaskform.addtasktitle.value, false);
                 $scope.selectedTabName='tasklist';
             }
             $scope.editTask = function(id) {
@@ -19,18 +59,17 @@ function Controller() {
             }
             $scope.updateTask = function() {
                 var task = new Task(edittaskform.edittasktitle.value, edittaskform.edittaskdescription.value, $scope.tasklist[$scope.editid].checked);
-                repo.updateTask($scope.editid, task);
+                repository.updateTask($scope.editid, task);
                 $scope.selectedTabName='tasklist';
             }
             $scope.deleteTask = function(id) {
-                repo.removeTask(id);
+                repository.removeTask(id);
             }
             $scope.updateCheckedStatus = function(id) {
-                repo.updateCheckedStatus(id);
+                repository.updateCheckedStatus(id);
             }
         });
     }
 }
-
 var controller = new Controller();
 controller.init();

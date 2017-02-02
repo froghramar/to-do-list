@@ -6,7 +6,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <script src="model.js"></script>
-    <script src="view.js"></script>
     <script src="controller.js"></script>
 </head>
 <body>
@@ -19,19 +18,19 @@
             </todo-tablist>
             <todo-tab-content ng-switch="selectedTabName">
                 <div ng-switch-when="tasklist">
-                    <input id='searchbox' type="text" ng-model="searchKey" placeholder="Search for tasks"></input>
+                    <input id='searchbox' type="text" ng-model="searchKey" placeholder="Search for tasks">
                     <form id="radiofilter">
                         <input type="radio" ng-model="todoFilter" value="all"> All
                         <input type="radio" ng-model="todoFilter" value="checked"> Checked
                         <input type="radio" ng-model="todoFilter" value="unchecked"> Unchecked
                     </form>
                     <todo-tasklist-dir>
-                        <todo-task ng-repeat="(id,task) in tasklist" ng-show="(task.title.includes(searchKey) || task.description.includes(searchKey)) &&
+                        <todo-task ng-repeat="(id,task) in tasklist" ng-class="{'todo-checked': task.checked}" ng-show="(task.title.includes(searchKey) || task.description.includes(searchKey)) &&
                         ((todoFilter == 'all') || (todoFilter == 'checked' && task.checked == true) || (todoFilter == 'unchecked' && task.checked == false))">
                             <todo-task-title>{{task.title}}</todo-task-title>
                             <button class='todo-delete-button todo-button-default' ng-click="deleteTask(id)">Delete</button>
                             <button class='todo-edit-button todo-button-default' ng-click="editTask(id)">Edit</button>
-                            <input type='checkbox' class='todo-task-checkbox' ng-click="updateCheckedStatus(id)" ng-checked={{task.checked}}></input>
+                            <input type='checkbox' class='todo-task-checkbox' ng-click="updateCheckedStatus(id)" ng-checked={{task.checked}}>
                             <todo-task-description>{{task.description}}</todo-task-description>
                         </todo-task>
                     </todo-tasklist-dir>

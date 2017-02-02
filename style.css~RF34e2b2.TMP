@@ -3,6 +3,9 @@
     max-width: 800px;
     margin: auto;
 }
+todo-task.todo-checked{
+    background-color:lightcyan;
+}
 todo-title {
     text-align: center;
 }
@@ -37,16 +40,10 @@ todo-task {
     border-style: solid;
     border-width: 1px;
 }
-todo-task.todo-checked{
-    background-color:lightcyan;
-}
 todo-task > todo-task-title {
     font-weight: bold;
 }
-todo-task.todo-checked > todo-task-title, todo-task.todo-checked > todo-task-description {
-    text-decoration: line-through;
-}
-todo-task > .todo-task-checkbox{
+.todo-task-checkbox{
     cursor: pointer;
     margin-top: 10px;
 }
@@ -65,7 +62,7 @@ todo-task > .todo-task-checkbox{
     color: white;
     background-color: #333333;
 }
-todo-task > .todo-task-checkbox, todo-task > .todo-edit-button, todo-task > .todo-delete-button {
+.todo-task-checkbox, .todo-edit-button, .todo-delete-button {
     float: right;
 }
 #radiofilter {
