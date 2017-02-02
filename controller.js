@@ -62,7 +62,7 @@ function Controller() {
             repository.cloneLocalStorage();
             $scope.tasklist = repository.getTaskList();
             $scope.addTask = function () {
-                repository.addTask(addtaskform.addtasktitle.value, addtaskform.addtasktitle.value, false);
+                repository.addTask(addtaskform.addtasktitle.value, addtaskform.addtaskdescription.value, false);
                 location.replace("#tasklist");
             }
             $scope.editTask = function(id) {
