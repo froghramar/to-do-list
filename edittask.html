@@ -1,0 +1,9 @@
+﻿<div>
+    <form id='edittaskform' name='edittaskform' ng-submit="updateTask()">
+        <p>Title :</p>
+        <input name="edittasktitle" ng-model="edittasktitle" type="text" required>
+        <p>Description :</p>
+        <textarea name="edittaskdescription" ng-model="edittaskdescription" type="text"></textarea>
+        <button type="submit" value="Submit" class='todo-button-default' ng-disabled="!edittaskform.edittasktitle.$valid">Save</button>
+    </form>
+</div>

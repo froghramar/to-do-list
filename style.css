@@ -6,12 +6,14 @@
 todo-title {
     text-align: center;
 }
-todo-tabbed-panel > todo-tablist > todo-tab {
+todo-tabbed-panel > todo-tablist > a {
+    text-decoration: none;
+    color: black;
     padding: 10px;
     border: 1px solid black;
     cursor: pointer;
 }
-todo-tabbed-panel > todo-tablist:after, todo-task > todo-task-description:before{
+todo-tabbed-panel > todo-tablist:after, todo-task > todo-task-description:before, todo-tab-content:before {
     display: block;
 	content: "";
     white-space: pre;
@@ -27,7 +29,7 @@ textarea[type="text"] {
     height: 100px;
     margin-bottom: 20px;
 }
-todo-tasklist-dir {
+todo-tasklist {
     display: flex;
     flex-direction: column;
 }

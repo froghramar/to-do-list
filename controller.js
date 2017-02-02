@@ -1,6 +1,21 @@
 function Controller() {
     this.init = function() {
-        var app = angular.module("app-tasklist", []);
+        var app = angular.module("app-tasklist", ["ngRoute"]);
+        app.config(function ($routeProvider) {
+            $routeProvider
+            .when("/", {
+                templateUrl: "tasklist.html"
+            })
+            .when("/tasklist", {
+                templateUrl: "tasklist.html"
+            })
+            .when("/newtask", {
+                templateUrl: "newtask.html"
+            })
+            .when("/edittask", {
+                templateUrl: "edittask.html"
+            });
+        });
         app.service('repository', function () {
             this.taskList = {};
             this.addTask = function (title, description, checked) {
@@ -42,25 +57,24 @@ function Controller() {
             }
         });
         app.controller('app-tasklist-ctrl', function($scope, repository) {
-            $scope.selectedTabName = "tasklist";
             $scope.todoFilter = "all";
             $scope.searchKey = "";
             repository.cloneLocalStorage();
             $scope.tasklist = repository.getTaskList();
             $scope.addTask = function () {
                 repository.addTask(addtaskform.addtasktitle.value, addtaskform.addtasktitle.value, false);
-                $scope.selectedTabName='tasklist';
+                location.replace("#tasklist");
             }
             $scope.editTask = function(id) {
                 $scope.editid = id;
                 $scope.edittasktitle = $scope.tasklist[id].title;
                 $scope.edittaskdescription = $scope.tasklist[id].description;
-                $scope.selectedTabName='edittask';
+                location.replace("#edittask");
             }
             $scope.updateTask = function() {
                 var task = new Task(edittaskform.edittasktitle.value, edittaskform.edittaskdescription.value, $scope.tasklist[$scope.editid].checked);
                 repository.updateTask($scope.editid, task);
-                $scope.selectedTabName='tasklist';
+                location.replace("#tasklist");
             }
             $scope.deleteTask = function(id) {
                 repository.removeTask(id);

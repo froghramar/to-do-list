@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>My To Do List</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
     <link rel="stylesheet" href="style.css">
     <script src="model.js"></script>
     <script src="controller.js"></script>
@@ -13,47 +14,10 @@
         <todo-title><h1>My To Do List</h1></todo-title>
         <todo-tabbed-panel ng-app="app-tasklist" ng-controller="app-tasklist-ctrl">
             <todo-tablist>
-                <todo-tab ng-click="selectedTabName='tasklist'">Task List</todo-tab>
-                <todo-tab ng-click="selectedTabName='newtask'">New Task</todo-tab>
+                <a href="#tasklist">Task List</a>
+                <a href="#newtask">New Task</a>
+                <todo-tab-content ng-view></todo-tab-content>
             </todo-tablist>
-            <todo-tab-content ng-switch="selectedTabName">
-                <div ng-switch-when="tasklist">
-                    <input id='searchbox' type="text" ng-model="searchKey" placeholder="Search for tasks">
-                    <form id="radiofilter">
-                        <input type="radio" ng-model="todoFilter" value="all"> All
-                        <input type="radio" ng-model="todoFilter" value="checked"> Checked
-                        <input type="radio" ng-model="todoFilter" value="unchecked"> Unchecked
-                    </form>
-                    <todo-tasklist-dir>
-                        <todo-task ng-repeat="(id,task) in tasklist" ng-class="{'todo-checked': task.checked}" ng-show="(task.title.includes(searchKey) || task.description.includes(searchKey)) &&
-                        ((todoFilter == 'all') || (todoFilter == 'checked' && task.checked == true) || (todoFilter == 'unchecked' && task.checked == false))">
-                            <todo-task-title>{{task.title}}</todo-task-title>
-                            <button class='todo-delete-button todo-button-default' ng-click="deleteTask(id)">Delete</button>
-                            <button class='todo-edit-button todo-button-default' ng-click="editTask(id)">Edit</button>
-                            <input type='checkbox' class='todo-task-checkbox' ng-click="updateCheckedStatus(id)" ng-checked={{task.checked}}>
-                            <todo-task-description>{{task.description}}</todo-task-description>
-                        </todo-task>
-                    </todo-tasklist-dir>
-                </div>
-                <div ng-switch-when="newtask">
-                    <form id='addtaskform' name='addtaskform' ng-submit="addTask()">
-                        <p>Title :</p>
-                        <input name="addtasktitle" ng-model="addtasktitle" type="text" required>
-                        <p>Description :</p>
-                        <textarea name="addtaskdescription" ng-model="addtaskdescription" type="text"></textarea>
-                        <button type="submit" value="Submit" class='todo-button-default' ng-disabled="!addtaskform.addtasktitle.$valid">Add</button>
-                    </form>
-                </div>
-                <div ng-switch-when="edittask">
-                    <form id='edittaskform' name='edittaskform' ng-submit="updateTask()">
-                        <p>Title :</p>
-                        <input name="edittasktitle" ng-model="edittasktitle" type="text" required>
-                        <p>Description :</p>
-                        <textarea name="edittaskdescription" ng-model="edittaskdescription" type="text"></textarea>
-                        <button type="submit" value="Submit" class='todo-button-default' ng-disabled="!edittaskform.edittasktitle.$valid">Save</button>
-                    </form>
-                </div>
-            </todo-tab-content>
         </todo-tabbed-panel>
     </div>
 </body>

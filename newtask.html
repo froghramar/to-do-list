@@ -1,0 +1,9 @@
+﻿<div>
+    <form id='addtaskform' name='addtaskform' ng-submit="addTask()">
+        <p>Title :</p>
+        <input name="addtasktitle" ng-model="addtasktitle" type="text" required>
+        <p>Description :</p>
+        <textarea name="addtaskdescription" ng-model="addtaskdescription" type="text"></textarea>
+        <button type="submit" value="Submit" class='todo-button-default' ng-disabled="!addtaskform.addtasktitle.$valid">Add</button>
+</form>
+</div>
