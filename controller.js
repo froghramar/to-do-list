@@ -76,8 +76,11 @@ function Controller() {
                 repository.updateTask($scope.editid, task);
                 location.replace("#tasklist");
             }
-            $scope.deleteTask = function(id) {
-                repository.removeTask(id);
+            $scope.deleteTask = function (id) {
+                var confirmation = confirm("Are you sure?");
+                if (confirmation) {
+                    repository.removeTask(id);
+                }
             }
             $scope.updateCheckedStatus = function(id) {
                 repository.updateCheckedStatus(id);
